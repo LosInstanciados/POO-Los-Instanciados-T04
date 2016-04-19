@@ -4,11 +4,19 @@
  * and open the template in the editor.
  */
 package poo.tarea4;
+import java.awt.Color;
+import java.awt.Font;
 import javax.swing.*;
-import java.awt.event.*;
-/*import javax.swing.JLabel;
-import javax.swing.JTextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import java.sql.*;
+import java.sql.DriverManager;
+import java.util.LinkedList;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 
 /**
@@ -19,19 +27,17 @@ public class Ventana extends JFrame implements ActionListener  {
     JMenuItem cmdAltaCliente, cmdRegistroCompras, cmdPagos, cmdConsultaSaldo;
     JMenu menuClientes, menuMovimientos;
     JMenuBar barMenu;
-    /*JLabel lblcodigo;
-    JTextField txtcodigo;
-    JButton btnAceptar;
-    */
     
+     
     public Ventana () {
 
      //Establecemos el titulo de la ventana
     super ("Monedero Electronico");
     //Establecemos la ubicacion en la pantalla, y las dimensiones de la ventana
-            setBounds(20,10,1340, 700);
+            setBounds(200,70,700, 500);
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             
+           
             /*setLayout(null);
               btnAceptar=new JButton("Aceptar");
               btnAceptar.setBounds(500,350,400,70);
@@ -57,6 +63,7 @@ public class Ventana extends JFrame implements ActionListener  {
     menuMovimientos = new JMenu("Movimientos");
     //Paso 3. Creamos la barra JMenuBar
     barMenu = new JMenuBar();
+   
     //Paso 4. Agregar los items a los menus
     menuClientes.add(cmdAltaCliente);
     
@@ -79,15 +86,61 @@ public class Ventana extends JFrame implements ActionListener  {
          cmdPagos.addActionListener(this);
          cmdConsultaSaldo.addActionListener(this);
       
-    
-}
-
-
-    
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+     
+    /*public void insert(){   
+    try {
+    // connection string
+        Class.forName("com.mysql.jdbc.Driver").newInstance();
+        Connection con = DriverManager
+                .getConnection("jdbc:mysql://localhost:3306/Project?user=root&password=root");
+        Statement st = con.createStatement();
+
+        st.executeUpdate("insert into Register VALUES('"
+                + txtNombre.getText() + "','" + txtEmail.getText() + "','"
+                + txtTelefono.getText() + "','" + txtIdtarjeta.getText());
+        JOptionPane.showConfirmDialog(null, "Your Data Has been Inserted",
+                "Result", JOptionPane.DEFAULT_OPTION,
+                JOptionPane.PLAIN_MESSAGE);
+
+        st.close();
+        con.close();
+
+    }
+
+    catch (Exception e1)
+
+    {
+        System.out.println("Exception:" + e1);
+    }
+        
+        
+       }
+    */
+    
+       
+    @Override
+    @SuppressWarnings("override")
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource()==cmdAltaCliente){
+          altaDeClientes cliente = new altaDeClientes();
+                     
+        
+        }else if(e.getSource()==cmdRegistroCompras){
+                   
+            registroDeCompras registro = new registroDeCompras();
+            
+        }else if(e.getSource()==cmdPagos){
+                    
+            pagos pagos = new pagos();
+         }else if(e.getSource()==cmdConsultaSaldo){
+                  consultaDeSaldo saldo = new consultaDeSaldo();
+                             
+         }     
+                  }
+
+      }
     
     
     
@@ -95,5 +148,4 @@ public class Ventana extends JFrame implements ActionListener  {
     
     
     
-    
-}
+
