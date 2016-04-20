@@ -14,7 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
+
 
 /**
  *
@@ -26,7 +26,6 @@ public class pagos extends JFrame /*implements ActionListener*/ {
     private final JButton btnAceptar, btnCancelar;
     private final JTextField txtID, txtCantidad;
 
-    DefaultTableModel model;
     Connection conn;
     Statement sent;
 
