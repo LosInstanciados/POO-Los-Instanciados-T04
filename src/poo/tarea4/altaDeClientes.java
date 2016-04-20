@@ -10,13 +10,9 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import db.Mysql;
-import static db.Mysql.getConnection;
 import java.sql.*;
-import java.sql.CallableStatement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 /**
  *
@@ -27,16 +23,14 @@ public class altaDeClientes extends JFrame implements ActionListener {
     protected JButton btnAceptar, btnCancelar, btnLimpiar;
     protected JTextField txtNombre, txtEmail, txtTelefono, txtIdtarjeta;
     protected final JFrame v = new JFrame("ALTA DE CLIENTES");
-
-    //protected final JTable table1 = new JTable();
-    DefaultTableModel model;
+    
     Connection conn;
     Statement sent;
 
     public altaDeClientes() {
         v.setSize(500, 250);  //Establecemos las dimensiones del formulario (ancho x alto)
         v.setLocation(440, 100); //Establecemos la ubicación en pantalla (x,y)
-        //initComponents();
+        
         conn = Mysql.getConnection();
 
     
