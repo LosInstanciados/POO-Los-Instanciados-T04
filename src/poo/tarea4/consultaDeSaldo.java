@@ -27,7 +27,7 @@ public class consultaDeSaldo extends JFrame {
     private final JButton btnAceptar, btnCancelar;
     private final JTextField txtID, txtsaldo, txtnombre;
 
-    private JLabel lbls;
+    private JLabel lbls, lbln;
     DefaultTableModel modelo;
     Connection conn;
     Statement sent;
@@ -45,12 +45,14 @@ public class consultaDeSaldo extends JFrame {
 
         JLabel lblID = new JLabel("ID de Tarjeta: ");
         JLabel lbls = new JLabel("Saldo: ");
+        JLabel lbln = new JLabel("Nombre: ");
         txtID = new JTextField(20);
         txtsaldo = new JTextField(20);
         txtnombre = new JTextField(20);
 
         lblID.setBounds(10, 30, 120, 30);
         lbls.setBounds(10, 60, 120, 30);
+        lbln.setBounds(10, 90, 120, 30);
 
         txtID.setBounds(200, 30, 120, 30);
         txtsaldo.setBounds(200, 60, 120, 30);
@@ -67,6 +69,7 @@ public class consultaDeSaldo extends JFrame {
 
         this.getContentPane().add(lblID);
         this.getContentPane().add(lbls);
+        this.getContentPane().add(lbln)
         this.getContentPane().add(txtsaldo);
         this.getContentPane().add(txtID);
         this.getContentPane().add(txtnombre);
