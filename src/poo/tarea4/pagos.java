@@ -31,11 +31,13 @@ public class pagos extends JFrame /*implements ActionListener*/ {
     Statement sent;
 
     public pagos() {
+        //aqui va el nombre de la ventana
         super("Registra tu pago");
         conn = Mysql.getConnection();
         setBounds(200, 200, 500, 500);
         setLocation(10, 10);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //creamos los botones,las labels y los text field asi como su posiciones y tamaño
         btnAceptar = new JButton("Aceptar");
         btnCancelar = new JButton("Cancelar");
         JLabel lblID = new JLabel("ID de Tarjeta: ");
@@ -48,6 +50,7 @@ public class pagos extends JFrame /*implements ActionListener*/ {
         txtCantidad.setBounds(200, 100, 120, 30);
         btnAceptar.setBounds(50, 180, 100, 50);
         btnCancelar.setBounds(200, 180, 100, 50);
+         // creamos el panel y agregamos los botones, labels y  text fields
         JPanel jp = new JPanel();
         jp.setBounds(0, 0, 800, 800);
         jp.setLayout(null);
@@ -60,13 +63,15 @@ public class pagos extends JFrame /*implements ActionListener*/ {
         this.getContentPane().add(txtCantidad);
         setVisible(true);
         this.repaint();
-
+        //agregamos el actionlistener para que haga una accion si pretamos uno de los dos botones
+        //si el usuario pulsa cancelar se cerrara el progra
         btnCancelar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 salir();
 
             }
         });
+        //si le pulsa aceptar se desplegara este mensaje
         btnAceptar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
 if((txtID.getText().isEmpty())&&(txtCantidad.getText().isEmpty())){
