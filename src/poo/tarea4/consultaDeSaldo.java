@@ -25,7 +25,7 @@ import javax.swing.table.DefaultTableModel;
 public class consultaDeSaldo extends JFrame {
 
     private final JButton btnAceptar, btnCancelar;
-    private final JTextField txtID, txtsaldo;
+    private final JTextField txtID, txtsaldo, txtnombre;
 
     private JLabel lbls;
     DefaultTableModel modelo;
@@ -47,12 +47,14 @@ public class consultaDeSaldo extends JFrame {
         JLabel lbls = new JLabel("Saldo: ");
         txtID = new JTextField(20);
         txtsaldo = new JTextField(20);
+        txtnombre = new JTextField(20);
 
         lblID.setBounds(10, 30, 120, 30);
         lbls.setBounds(10, 60, 120, 30);
 
         txtID.setBounds(200, 30, 120, 30);
         txtsaldo.setBounds(200, 60, 120, 30);
+        txtnombre.setBounds(200, 90, 120, 30);
 
         btnAceptar.setBounds(50, 180, 100, 50);
         btnCancelar.setBounds(200, 180, 100, 50);
@@ -67,6 +69,7 @@ public class consultaDeSaldo extends JFrame {
         this.getContentPane().add(lbls);
         this.getContentPane().add(txtsaldo);
         this.getContentPane().add(txtID);
+        this.getContentPane().add(txtnombre);
         setVisible(true);
         this.repaint();
         btnCancelar.addActionListener(new ActionListener() {
@@ -82,9 +85,10 @@ public class consultaDeSaldo extends JFrame {
                 try {
 
                     Statement comando = conn.createStatement();
-                    ResultSet registro = comando.executeQuery("select cantidad from saldo where id_tarjeta=" + txtID.getText());
+                    ResultSet registro = comando.executeQuery("select cantidad, Nombre from saldo where id_tarjeta=" + txtID.getText());
                     if (registro.next() == true) {
                         txtsaldo.setText(registro.getString("cantidad"));
+                        txtnombre.setText(registro.getString("Nombre"));
 
                     } else {
                         JOptionPane.showMessageDialog(null, "ID incorrecta");
