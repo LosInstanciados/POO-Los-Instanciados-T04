@@ -75,8 +75,10 @@ if((txtID.getText().isEmpty())&&(txtCantidad.getText().isEmpty())){
                 try {
 
                     Statement comando = conn.createStatement();
-                    ResultSet registro = comando.executeQuery("select cantidad from saldo where id_tarjeta=" + txtID.getText());
-                    if (registro.next() == true) {
+                        Statement coman = conn.createStatement();
+                        ResultSet registro = comando.executeQuery("select * from saldo where id_tarjeta=" + txtID.getText());
+                        ResultSet verificarsaldo = coman.executeQuery("select * from saldo where Cantidad >=" + txtCantidad.getText());
+                        if ((registro.next() == true) && (verificarsaldo.next() == true)) {
                         String sql = "insert into pagos(id_tarjeta, Cantidad)"
                                 + "values(?,?)";
                         PreparedStatement ps = conn.prepareCall(sql);
@@ -93,7 +95,7 @@ if((txtID.getText().isEmpty())&&(txtCantidad.getText().isEmpty())){
                             JOptionPane.showMessageDialog(null, "ID INCORRECTA");
                         }
                     } else {
-                        JOptionPane.showMessageDialog(null, "ID incorrecta");
+                        JOptionPane.showMessageDialog(null, "ID incorrecta o saldo insuficiente");
                     }
 
                 } catch (SQLException ex) {
