@@ -16,9 +16,9 @@ public class POOTarea4 {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        
+        //instanciamos la clase
         Ventana v = new Ventana ();
-        Ventana object = new Ventana();
+       
         
     }
     
