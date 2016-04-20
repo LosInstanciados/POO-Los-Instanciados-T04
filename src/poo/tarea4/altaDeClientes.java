@@ -121,23 +121,28 @@ public class altaDeClientes extends JFrame implements ActionListener {
     }
 
     
-
+//programar eventos
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnAceptar) {
+            //verificamos que los campos no esten vacios
                 if((txtNombre.getText().isEmpty())&&(txtTelefono.getText().isEmpty())&&(txtIdtarjeta.getText().isEmpty())&&(txtEmail.getText().isEmpty())){
                     JOptionPane.showMessageDialog(null, "Todos los campos deben de estar llenos");
                 }else{
             try {
-                
+                // el query que ejecutaremos lo guardaremos en una variable tipo string, el query tiene el nombre de las columnas como estan en la base de datos y en los valores ponemos ? porque aun no estan especificados
                 String sql = "insert into clientes(nombre, email, telefono, id_tarjeta)"
                         + "values(?,?,?,?)";
+                //Utilizamos PreparedStatement en vez de Statement para una query que ya ha sido compilada y hacemos la conexion, en este caso la variable es sql y quedara guardada en el statement ps
                 PreparedStatement ps = conn.prepareCall(sql);
+                // el primer parametro que recibira ps.setString sera el numero de columna y el segundo sera la obtencion del valor que guardaron nuestras variables escritas en el codigo
                 ps.setString(1, txtNombre.getText());
                 ps.setString(2, txtEmail.getText());
                 ps.setString(3, txtTelefono.getText());
                 ps.setString(4, txtIdtarjeta.getText());
+                //ejecutaremos el statment ps y lo guardaremos en un interger llamado n
                 int n = ps.executeUpdate();
+                // Verificamos que existan resultados y si existen n sera mayor a 0
                 if (n > 0) {
                     JOptionPane.showMessageDialog(null, "Datos Guardados");
 
@@ -151,9 +156,10 @@ public class altaDeClientes extends JFrame implements ActionListener {
             }
             
                 }
+                //boton para salir del formulario
         } else if (e.getSource() == btnCancelar) {
             salir();
-
+//boton para limpiar campos
         } else if (e.getSource() == btnLimpiar) {
             txtNombre.setText("");
             txtEmail.setText("");
