@@ -4,35 +4,37 @@
  * and open the template in the editor.
  */
 package poo.tarea4;
+
 import db.Mysql;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author casa
  */
 
+public class pagos extends JFrame /*implements ActionListener*/ {
 
-public class pagos extends JFrame implements ActionListener {
     private final JButton btnAceptar, btnCancelar;
     private final JTextField txtID, txtCantidad;
 
     DefaultTableModel model;
     Connection conn;
     Statement sent;
-    
-    
+
     public pagos() {
         super("Registra tu pago");
-         conn = Mysql.getConnection();
-        setBounds(200,200,500,500);
-        setLocation(10,10);
+        conn = Mysql.getConnection();
+        setBounds(200, 200, 500, 500);
+        setLocation(10, 10);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         btnAceptar = new JButton("Aceptar");
         btnCancelar = new JButton("Cancelar");
@@ -46,7 +48,7 @@ public class pagos extends JFrame implements ActionListener {
         txtCantidad.setBounds(200, 100, 120, 30);
         btnAceptar.setBounds(50, 180, 100, 50);
         btnCancelar.setBounds(200, 180, 100, 50);
-        JPanel jp= new JPanel();
+        JPanel jp = new JPanel();
         jp.setBounds(0, 0, 800, 800);
         jp.setLayout(null);
         this.setContentPane(jp);
@@ -58,63 +60,51 @@ public class pagos extends JFrame implements ActionListener {
         this.getContentPane().add(txtCantidad);
         setVisible(true);
         this.repaint();
-        btnAceptar.addActionListener(this);
-        btnCancelar.addActionListener(this);
+
+        btnCancelar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                salir();
+
+            }
+        });
+        btnAceptar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+if((txtID.getText().isEmpty())&&(txtCantidad.getText().isEmpty())){
+                    JOptionPane.showMessageDialog(null, "Todos los campos deben de estar llenos");
+                }else{
+                try {
+
+                    Statement comando = conn.createStatement();
+                    ResultSet registro = comando.executeQuery("select cantidad from saldo where id_tarjeta=" + txtID.getText());
+                    if (registro.next() == true) {
+                        String sql = "insert into pagos(id_tarjeta, Cantidad)"
+                                + "values(?,?)";
+                        PreparedStatement ps = conn.prepareCall(sql);
+                        ps.setString(1, txtID.getText());
+                        ps.setString(2, txtCantidad.getText());
+
+                        int n = ps.executeUpdate();
+                        if (n > 0) {
+                            JOptionPane.showMessageDialog(rootPane, txtID.getText()
+                                    + "\n" + txtCantidad.getText() + "\nSe registró correctamente");
+                            JOptionPane.showMessageDialog(null, "Datos Guardados");
+
+                        } else {
+                            JOptionPane.showMessageDialog(null, "ID INCORRECTA");
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "ID incorrecta");
+                    }
+
+                } catch (SQLException ex) {
+                    setTitle(ex.toString());
+                }
+            }
+            }
+        });
     }
-    private void salir (){
-    System.exit(0);
-}
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource()==btnAceptar) {
-            
-            try {
 
-                String sql = "insert into pagos(id_tarjeta, Cantidad)"
-                        + "values(?,?)";
-                PreparedStatement ps = conn.prepareCall(sql);
-                ps.setString(1, txtID.getText());
-                ps.setString(2, txtCantidad.getText());
-                
-                int n = ps.executeUpdate();
-                if (n > 0) {
-                    JOptionPane.showMessageDialog(null, "Datos Guardados");
-
-                }
-                JOptionPane.showMessageDialog(rootPane, txtID.getText() 
-                        + "\n" + txtCantidad.getText() + "\nSe registró correctamente");
-
-            } catch (Exception el) {
-                JOptionPane.showMessageDialog(null, "Error" + el.getMessage());
-
-            }
-            try {
-                conn = Mysql.getConnection();
-                String[] titulos = {"id_tarjeta", "Cantidad"};
-                String sql = "select * from pagos";
-                model = new DefaultTableModel(null, titulos);
-                sent = conn.createStatement();
-                ResultSet rs = sent.executeQuery(sql);
-
-                String[] fila = new String[4];
-
-                while (rs.next()) {
-                    fila[0] = rs.getString("id_tarjeta");
-                    fila[1] = rs.getString("Cantidad");
-                    
-
-                    model.addRow(fila);
-                }
-
-               // table1.setModel(model);
-            } catch (Exception el) {
-                el.printStackTrace();
-            }
-            
-            
-        }
-        if (e.getSource()==btnCancelar) {
-            salir();
-        }
+    private void salir() {
+        System.exit(0);
     }
 }

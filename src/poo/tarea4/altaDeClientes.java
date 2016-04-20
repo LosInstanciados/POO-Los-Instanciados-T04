@@ -125,7 +125,9 @@ public class altaDeClientes extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnAceptar) {
-
+                if((txtNombre.getText().isEmpty())&&(txtTelefono.getText().isEmpty())&&(txtIdtarjeta.getText().isEmpty())&&(txtEmail.getText().isEmpty())){
+                    JOptionPane.showMessageDialog(null, "Todos los campos deben de estar llenos");
+                }else{
             try {
                 
                 String sql = "insert into clientes(nombre, email, telefono, id_tarjeta)"
@@ -147,31 +149,8 @@ public class altaDeClientes extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Error" + el.getMessage());
 
             }
-            try {
-                conn = Mysql.getConnection();
-                String[] titulos = {"Nombre", "Email", "Telefono", "id_tarjeta"};
-                String sql = "select * from clientes";
-                model = new DefaultTableModel(null, titulos);
-                sent = conn.createStatement();
-                ResultSet rs = sent.executeQuery(sql);
-
-                String[] fila = new String[4];
-
-                while (rs.next()) {
-                    fila[0] = rs.getString("Nombre");
-                    fila[1] = rs.getString("Email");
-                    fila[2] = rs.getString("Telefono");
-                    fila[3] = rs.getString("id_tarjeta");
-
-                    model.addRow(fila);
-                }
-
-                // table1.setModel(model);
-            } catch (Exception el) {
-                el.printStackTrace();
-            }
             
-
+                }
         } else if (e.getSource() == btnCancelar) {
             salir();
 
@@ -182,6 +161,6 @@ public class altaDeClientes extends JFrame implements ActionListener {
             txtIdtarjeta.setText("");
 
         } 
-
+        }
     }
-}
+

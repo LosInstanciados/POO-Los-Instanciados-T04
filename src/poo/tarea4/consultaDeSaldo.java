@@ -11,23 +11,27 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-
-public class consultaDeSaldo extends JFrame implements ActionListener {
+public class consultaDeSaldo extends JFrame {
 
     private final JButton btnAceptar, btnCancelar;
-    private final JTextField txtID;
-    DefaultTableModel model;
+    private final JTextField txtID, txtsaldo;
+
+    private JLabel lbls;
+    DefaultTableModel modelo;
     Connection conn;
     Statement sent;
     public StringBuffer sb;
-    
-    FlowLayout ventana1 = new FlowLayout();
 
     public consultaDeSaldo() {
         super("Registra tu compra");
@@ -40,12 +44,15 @@ public class consultaDeSaldo extends JFrame implements ActionListener {
         btnCancelar = new JButton("Cancelar");
 
         JLabel lblID = new JLabel("ID de Tarjeta: ");
-
+        JLabel lbls = new JLabel("Saldo: ");
         txtID = new JTextField(20);
+        txtsaldo = new JTextField(20);
 
         lblID.setBounds(10, 30, 120, 30);
+        lbls.setBounds(10, 60, 120, 30);
 
         txtID.setBounds(200, 30, 120, 30);
+        txtsaldo.setBounds(200, 60, 120, 30);
 
         btnAceptar.setBounds(50, 180, 100, 50);
         btnCancelar.setBounds(200, 180, 100, 50);
@@ -57,56 +64,42 @@ public class consultaDeSaldo extends JFrame implements ActionListener {
         this.getContentPane().add(btnCancelar);
 
         this.getContentPane().add(lblID);
-
+        this.getContentPane().add(lbls);
+        this.getContentPane().add(txtsaldo);
         this.getContentPane().add(txtID);
         setVisible(true);
         this.repaint();
-        btnAceptar.addActionListener(this);
-        btnCancelar.addActionListener(this);
-        
-        
-        
-        
-    }
-    public StringBuffer setStatement(Connection conn) throws SQLException{
-                CallableStatement cs = null;
-            
-            
-            try {
-              cs = conn.prepareCall("{CALL obtensaldo(?)}");
-              cs.registerOutParameter(1, Types.CHAR);
-              cs.registerOutParameter(2, Types.CHAR);
-              cs.execute();
-              sb.append("Nombre: "); 
-              sb.append("'"+cs.getString(1)+"' , ");
-              sb.append("Saldo: ");
-              sb.append("'"+cs.getString(2)+"' , ");
-            } catch (Exception e) {
-              System.out.println(e.toString());
-            } finally {
-              cs.close();
+        btnCancelar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                salir();
             }
-                
-                return sb;
-        }
+        });
+        btnAceptar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                if((txtID.getText().isEmpty())){
+                    JOptionPane.showMessageDialog(null, "Todos los campos deben de estar llenos");
+                }else{
+                try {
+
+                    Statement comando = conn.createStatement();
+                    ResultSet registro = comando.executeQuery("select cantidad from saldo where id_tarjeta=" + txtID.getText());
+                    if (registro.next() == true) {
+                        txtsaldo.setText(registro.getString("cantidad"));
+
+                    } else {
+                        JOptionPane.showMessageDialog(null, "ID incorrecta");
+                    }
+
+                } catch (SQLException ex) {
+                    setTitle(ex.toString());
+                }
+            }
+            }
+        });
+
+    }
 
     private void salir() {
         System.exit(0);
     }
-   
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == btnAceptar) {
-            storedProcedure pro = new storedProcedure();
-            StringBuffer sb = new StringBuffer();
-           
-           JOptionPane.showMessageDialog(null,pro.toString());
-           
-        }
-
-        if (e.getSource() == btnCancelar) {
-            salir();
-        }
-    }
-
 }

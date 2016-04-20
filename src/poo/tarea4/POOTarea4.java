@@ -18,6 +18,7 @@ public class POOTarea4 {
         // TODO code application logic here
         
         Ventana v = new Ventana ();
+        Ventana object = new Ventana();
         
     }
     
