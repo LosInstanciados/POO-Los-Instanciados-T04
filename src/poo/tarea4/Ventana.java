@@ -37,20 +37,6 @@ public class Ventana extends JFrame implements ActionListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         conn = Mysql.getConnection();
 
-        /*setLayout(null);
-              btnAceptar=new JButton("Aceptar");
-              btnAceptar.setBounds(500,350,400,70);
-              add(btnAceptar);
-        
-              btnAceptar.addActionListener(this); 
-              txtcodigo=new JTextField();
-              txtcodigo.setBounds(500,250,400,70);
-              add(txtcodigo);
-        
-              lblcodigo=new JLabel("INSERTA CODIGO");
-              lblcodigo.setBounds(500,150,400,70);
-              add(lblcodigo);
-         */
         //Paso 1. Crear los JMenuItems
         cmdAltaCliente = new JMenuItem("Alta de Clientes");
         cmdRegistroCompras = new JMenuItem("Registro de Compras");
@@ -90,16 +76,18 @@ public class Ventana extends JFrame implements ActionListener {
     @SuppressWarnings("override")
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == cmdAltaCliente) {
+            //instanciamos la clase altaDeClientes
             altaDeClientes cliente = new altaDeClientes();
 
         } else if (e.getSource() == cmdRegistroCompras) {
-
+//Instanciamos la clase registroDeCompras
             registroDeCompras registro = new registroDeCompras();
 
         } else if (e.getSource() == cmdPagos) {
-
+//Instanciamos la clase pagos
             pagos pagos = new pagos();
         } else if (e.getSource() == cmdConsultaSaldo) {
+            //instanciamos la clase consultaDeSaldo
            consultaDeSaldo saldo = new consultaDeSaldo(); 
             }
         }
