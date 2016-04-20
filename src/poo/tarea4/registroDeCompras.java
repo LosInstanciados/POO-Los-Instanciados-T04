@@ -13,7 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
+
 
 /**
  *
@@ -24,7 +24,7 @@ public class registroDeCompras extends JFrame implements ActionListener {
     private final JButton btnAceptar, btnCancelar;
     private final JTextField txtTicket, txtID, txtCantidad;
     //Declaramos las variables que serviran para conectar con la base de datos
-    DefaultTableModel model;
+    
     Connection conn;
     Statement sent;
 
