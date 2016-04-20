@@ -13,7 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
+
 
 public class consultaDeSaldo extends JFrame {
 
@@ -21,10 +21,10 @@ public class consultaDeSaldo extends JFrame {
     private final JTextField txtID, txtsaldo, txtnombre;
 
     private JLabel lbls, lbln;
-    DefaultTableModel modelo;
+   
     Connection conn;
     Statement sent;
-    public StringBuffer sb;
+    
 
     public consultaDeSaldo() {
         super("Registra tu compra");
