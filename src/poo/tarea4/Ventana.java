@@ -6,22 +6,13 @@
 package poo.tarea4;
 
 import db.Mysql;
-import java.awt.Color;
-import java.awt.Font;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import java.sql.*;
-import java.sql.DriverManager;
-import java.util.LinkedList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.table.DefaultTableModel;
+
 
 /**
  *
